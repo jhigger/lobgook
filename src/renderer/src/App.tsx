@@ -1,8 +1,8 @@
 import { Minus, Plus } from "lucide-react";
-import electronLogo from "./assets/electron.svg";
-import { Button } from "./components/ui/button";
 import { useState } from "react";
 import { toast } from "sonner";
+import electronLogo from "./assets/electron.svg";
+import { Button } from "./components/ui/button";
 
 function App(): JSX.Element {
   const [count, setCount] = useState(0);
@@ -23,6 +23,10 @@ function App(): JSX.Element {
       return count - 1;
     });
 
+  const quit = () => {
+    window.api.quit();
+  };
+
   return (
     <main className="dark flex min-h-screen w-screen flex-col items-center justify-center gap-4 bg-zinc-950">
       <h1 className="text-4xl text-white">Hello, World!</h1>
@@ -36,6 +40,9 @@ function App(): JSX.Element {
           <Plus />
         </Button>
       </div>
+      <Button variant="destructive" size="lg" onClick={quit}>
+        Exit
+      </Button>
     </main>
   );
 }
