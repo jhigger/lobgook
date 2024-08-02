@@ -1,22 +1,18 @@
+import Header from "./components/Header";
 import RecordForm from "./components/RecordForm";
-import ThemeChanger from "./components/ThemeChanger";
-import { Button } from "./components/ui/button";
+import SideBar from "./components/SideBar";
 
 function App(): JSX.Element {
-  const quit = () => {
-    window.api.quit();
-  };
-
   return (
-    <main className="flex min-h-screen w-screen flex-col items-center justify-center bg-background">
-      <section className="container mx-auto flex flex-col items-center justify-center gap-4">
-        <ThemeChanger />
-        <RecordForm />
-        <Button variant="destructive" size="lg" onClick={quit}>
-          Exit
-        </Button>
-      </section>
-    </main>
+    <div className="flex h-screen w-full flex-col bg-muted/50 pl-[56px]">
+      <SideBar />
+      <Header />
+      <div className="flex h-screen flex-col overflow-y-auto p-8">
+        <main className="container mx-auto flex h-max flex-col items-center justify-center gap-4 rounded-lg bg-background p-8 shadow">
+          <RecordForm />
+        </main>
+      </div>
+    </div>
   );
 }
 

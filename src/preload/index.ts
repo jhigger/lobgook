@@ -3,6 +3,9 @@ import { contextBridge, ipcRenderer } from "electron";
 
 // Custom APIs for renderer
 const api = {
+  minimize: () => ipcRenderer.send("minimize"),
+  maximize: () => ipcRenderer.send("maximize"),
+  unmaximize: () => ipcRenderer.send("unmaximize"),
   quit: () => ipcRenderer.send("quit"),
 };
 

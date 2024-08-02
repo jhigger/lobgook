@@ -3,7 +3,7 @@ import { app, BrowserWindow, ipcMain, shell } from "electron";
 import { join } from "path";
 import icon from "../../resources/icon.png?asset";
 
-function createWindow(): void {
+function createWindow(): BrowserWindow {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 1080,
@@ -18,6 +18,7 @@ function createWindow(): void {
       sandbox: false,
     },
     backgroundColor: "#09090b",
+    frame: false,
   });
 
   mainWindow.once("ready-to-show", () => {
@@ -38,6 +39,8 @@ function createWindow(): void {
   } else {
     mainWindow.loadFile(join(__dirname, "../renderer/index.html"));
   }
+
+  return mainWindow;
 }
 
 // This method will be called when Electron has finished
@@ -54,10 +57,16 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window);
   });
 
+  const mainWindow = createWindow();
+
   // IPC test
+  ipcMain.on("minimize", () => mainWindow.minimize());
+  ipcMain.on("maximize", () => mainWindow.maximize());
+  ipcMain.on("isMaximized", () => mainWindow.isMaximized());
+  ipcMain.on("unmaximize", () => mainWindow.unmaximize());
   ipcMain.on("quit", () => app.quit());
 
-  createWindow();
+  console.log(mainWindow.isMaximized());
 
   app.on("activate", function () {
     // On macOS it's common to re-create a window in the app when the

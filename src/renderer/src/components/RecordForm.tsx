@@ -20,12 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "./ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 const formSchema = z.object({
   lastName: z.string().min(1),
@@ -156,23 +151,22 @@ const RecordForm = () => {
               <FormControl>
                 <div className="flex w-full items-center gap-x-2">
                   <Input {...field} />
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button
-                          type="button"
-                          size="icon"
-                          className="shrink-0"
-                          onClick={getLatestApplicationNumber}
-                        >
-                          <TextSearch />
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p>Determine latest application #</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="icon"
+                        className="shrink-0"
+                        onClick={getLatestApplicationNumber}
+                      >
+                        <TextSearch />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Determine latest application #</p>
+                    </TooltipContent>
+                  </Tooltip>
                 </div>
               </FormControl>
               <FormMessage />
