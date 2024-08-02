@@ -1,4 +1,5 @@
 import Header from "./components/Header";
+import MainLayout from "./components/MainLayout";
 import RecordForm from "./components/RecordForm";
 import SideBar from "./components/SideBar";
 
@@ -7,11 +8,11 @@ function App(): JSX.Element {
     <div className="flex h-screen w-full flex-col bg-muted/50 pl-[56px]">
       <SideBar />
       <Header />
-      <div className="flex h-screen flex-col overflow-y-auto p-8">
-        <main className="container mx-auto flex h-max flex-col items-center justify-center gap-4 rounded-lg bg-background p-8 shadow">
+      <main className="flex h-screen flex-col gap-8 overflow-y-auto p-8">
+        <MainLayout>
           <RecordForm />
-        </main>
-      </div>
+        </MainLayout>
+      </main>
     </div>
   );
 }

@@ -66,8 +66,6 @@ app.whenReady().then(() => {
   ipcMain.on("unmaximize", () => mainWindow.unmaximize());
   ipcMain.on("quit", () => app.quit());
 
-  console.log(mainWindow.isMaximized());
-
   app.on("activate", function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
