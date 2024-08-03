@@ -1,5 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { TextSearch } from "lucide-react";
+import { SendHorizonal, TextSearch } from "lucide-react";
+import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -30,8 +31,13 @@ const formSchema = z.object({
   applicationType: z.enum([
     "registration",
     "reactivation",
-    "reactivation with correction/change",
+    "correction of entries",
+    "reactivation with correction",
     "transfer incoming",
+    "transfer within",
+    "transfer with reactivation",
+    "transfer with reactivation and correction",
+    "post to Local",
   ]),
   gender: z.enum(["male", "female"]),
   applicationNumber: z.string().min(1),
@@ -41,7 +47,7 @@ const formSchema = z.object({
   sk: z.enum(["no", "15 to 17", "18 to 30"]),
 });
 
-type FormSchemaType = z.infer<typeof formSchema>;
+export type FormSchemaType = z.infer<typeof formSchema>;
 
 const defaultValues: FormSchemaType = {
   lastName: "",
@@ -83,6 +89,11 @@ const RecordForm = () => {
   const getLatestApplicationNumber = () => {
     form.setValue("applicationNumber", latestApplicationNumber);
   };
+
+  useEffect(() => {
+    const [sk, senior] = form.watch(["sk", "seniorCitizen"]);
+    if (sk !== "no" && senior) form.setValue("seniorCitizen", false);
+  }, [form.watch(["sk", "seniorCitizen"])]);
 
   return (
     <FormProvider {...form}>
@@ -271,9 +282,11 @@ const RecordForm = () => {
                     <Checkbox
                       checked={field.value}
                       onCheckedChange={field.onChange}
+                      disabled={form.watch("sk") !== "no"}
                     />
                   </FormControl>
                   <FormLabel>Senior Citizen</FormLabel>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -295,6 +308,7 @@ const RecordForm = () => {
           </div>
         </div>
         <Button type="submit" className="order-12 mt-8">
+          <SendHorizonal className="mr-2 h-4 w-4" />
           Submit
         </Button>
       </form>
