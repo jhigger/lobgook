@@ -111,25 +111,28 @@ export function DataTable<TData, TValue>({
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-end justify-between">
+      <CardHeader>
         <div>
           <CardTitle>Records</CardTitle>
           <CardDescription>List of all records</CardDescription>
-          <div className="flex items-center py-4">
-            <DebouncedInput
-              placeholder="Search..."
-              value={globalFilter}
-              onChange={(value) => setGlobalFilter(String(value))}
-              className="max-w-sm"
-            />
+        </div>
+
+        <div className="flex items-center gap-4 py-4">
+          <DebouncedInput
+            placeholder="Search..."
+            value={globalFilter}
+            onChange={(value) => setGlobalFilter(String(value))}
+            className="h-8 max-w-sm"
+          />
+          <div className="ml-auto">
+            <DataTableViewOptions table={table} />
           </div>
         </div>
-        <DataTableViewOptions table={table} />
       </CardHeader>
       <CardContent>
-        <div className="flex h-[calc(100vh-17.5rem)] flex-col justify-between gap-8">
-          <Table className="overflow-y-auto">
-            <TableHeader>
+        <div className="flex h-[calc(100vh-21.5rem)] flex-col justify-between gap-8">
+          <Table>
+            <TableHeader className="sticky top-0 bg-background shadow">
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {
