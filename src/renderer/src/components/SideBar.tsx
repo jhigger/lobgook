@@ -7,9 +7,9 @@ import {
   Sun,
 } from "lucide-react";
 import { useTheme } from "next-themes";
-import { NavLink } from "react-router-dom";
+import { Link, useMatch } from "react-router-dom";
 import { cn } from "../lib/utils";
-import { Button, buttonVariants } from "./ui/button";
+import { Button } from "./ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 type CustomNavLinkType = {
@@ -19,28 +19,27 @@ type CustomNavLinkType = {
 };
 
 const CustomNavLink = ({ to, icon, tooltip }: CustomNavLinkType) => {
+  const isActive = useMatch({ path: to });
+
   return (
-    <NavLink
-      to={to}
-      className={({ isActive }) =>
-        cn(
-          buttonVariants({
-            variant: "ghost",
-            size: "icon",
-            className: "",
-          }),
-          "rounded-lg",
-          isActive && "bg-foreground text-background",
-        )
-      }
-    >
-      <Tooltip>
-        <TooltipTrigger asChild>{icon}</TooltipTrigger>
-        <TooltipContent side="right" sideOffset={5}>
-          {tooltip}
-        </TooltipContent>
-      </Tooltip>
-    </NavLink>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Button
+          variant="ghost"
+          size="icon"
+          className={cn(
+            "rounded-lg",
+            isActive && "bg-foreground text-background",
+          )}
+          asChild
+        >
+          <Link to={to}>{icon}</Link>
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent side="right" sideOffset={5}>
+        {tooltip}
+      </TooltipContent>
+    </Tooltip>
   );
 };
 
