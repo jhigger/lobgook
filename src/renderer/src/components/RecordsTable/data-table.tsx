@@ -14,6 +14,7 @@ import { useState } from "react";
 
 import { RankingInfo, rankItem } from "@tanstack/match-sorter-utils";
 import { FilterFn } from "@tanstack/react-table";
+import { Search } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -30,6 +31,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
+import { Label } from "../ui/label";
 import { DataTablePagination } from "./DataTablePagination";
 import { DataTableViewOptions } from "./DataTableViewOptions";
 interface DataTableProps<TData, TValue> {
@@ -117,20 +119,27 @@ export function DataTable<TData, TValue>({
           <CardDescription>List of all records</CardDescription>
         </div>
 
-        <div className="flex items-center gap-4 py-4">
-          <DebouncedInput
-            placeholder="Search..."
-            value={globalFilter}
-            onChange={(value) => setGlobalFilter(String(value))}
-            className="h-8 max-w-sm"
-          />
+        <div className="flex items-center pt-4">
+          <div className="relative">
+            <Label htmlFor="search">
+              <Search className="absolute left-2.5 top-2 h-4 w-4 text-muted-foreground" />
+            </Label>
+            <DebouncedInput
+              id="search"
+              type="search"
+              placeholder="Search..."
+              value={globalFilter}
+              onChange={(value) => setGlobalFilter(String(value))}
+              className="h-8 max-w-sm pl-8"
+            />
+          </div>
           <div className="ml-auto">
             <DataTableViewOptions table={table} />
           </div>
         </div>
       </CardHeader>
       <CardContent>
-        <div className="flex h-[calc(100vh-21.5rem)] flex-col justify-between gap-8">
+        <div className="flex h-[calc(100vh-20.5rem)] flex-col justify-between gap-8">
           <Table>
             <TableHeader className="sticky top-0 bg-background shadow">
               {table.getHeaderGroups().map((headerGroup) => (
