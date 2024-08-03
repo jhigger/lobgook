@@ -17,6 +17,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { DataTableColumnHeader } from "./DataTableColumnHeader";
 
 const BooleanCell = ({ getValue }: CellContext<RecordType, unknown>) => {
   const value = getValue() as boolean;
@@ -34,7 +35,9 @@ const BooleanCell = ({ getValue }: CellContext<RecordType, unknown>) => {
 export const columns: ColumnDef<RecordType>[] = [
   {
     accessorKey: "createdAt",
-    header: "Date",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Date" />
+    ),
     cell: ({ getValue }) => {
       const date = getValue() as string;
       return formatISODateString(date);
@@ -42,15 +45,21 @@ export const columns: ColumnDef<RecordType>[] = [
   },
   {
     accessorKey: "lastName",
-    header: "Last Name",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Last Name" />
+    ),
   },
   {
     accessorKey: "firstName",
-    header: "First Name",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="First Name" />
+    ),
   },
   {
     accessorKey: "middleName",
-    header: "Middle Name",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Middle Name" />
+    ),
   },
   {
     accessorKey: "applicationType",
@@ -62,7 +71,9 @@ export const columns: ColumnDef<RecordType>[] = [
   },
   {
     accessorKey: "applicationNumber",
-    header: "Application Number",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Application Number" />
+    ),
     cell: ({ getValue }) => {
       const value = getValue() as string;
       return <Badge>{value}</Badge>;
