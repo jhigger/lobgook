@@ -43,23 +43,35 @@ export const columns: ColumnDef<RecordType>[] = [
       return formatISODateString(date);
     },
   },
+  // {
+  //   accessorFn: (row) => `${row.firstName} ${row.middleName}  ${row.lastName}`,
+  //   id: "fullName",
+  //   header: "Full Name",
+  //   cell: (info) => info.getValue(),
+  //   filterFn: "fuzzy", //using our custom fuzzy filter function
+  //   // filterFn: fuzzyFilter, //or just define with the function
+  //   sortingFn: fuzzySort, //sort by fuzzy rank (falls back to alphanumeric)
+  // },
   {
     accessorKey: "lastName",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Last Name" />
     ),
+    filterFn: "includesString",
   },
   {
     accessorKey: "firstName",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="First Name" />
     ),
+    filterFn: "includesString",
   },
   {
     accessorKey: "middleName",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Middle Name" />
     ),
+    filterFn: "includesString",
   },
   {
     accessorKey: "applicationType",
@@ -78,6 +90,7 @@ export const columns: ColumnDef<RecordType>[] = [
       const value = getValue() as string;
       return <Badge>{value}</Badge>;
     },
+    filterFn: "equalsString",
   },
   {
     accessorKey: "contactNumber",
