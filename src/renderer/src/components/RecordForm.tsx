@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+import { records } from "../lib/fakeData";
 import { Button } from "./ui/button";
 import {
   Card,
@@ -71,7 +72,16 @@ const defaultValues: FormSchemaType = {
 };
 
 const RecordForm = () => {
-  const latestApplicationNumber = "69";
+  const latestApplicationNumber = String(
+    Number(
+      records.reduce((prev, current) => {
+        return prev &&
+          Number(prev.applicationNumber) > Number(current.applicationNumber)
+          ? prev
+          : current;
+      }).applicationNumber,
+    ) + 1,
+  );
 
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
