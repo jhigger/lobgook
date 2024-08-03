@@ -6,6 +6,7 @@ import {
   getSortedRowModel,
   SortingState,
   useReactTable,
+  VisibilityState,
 } from "@tanstack/react-table";
 import { useState } from "react";
 
@@ -18,6 +19,7 @@ import {
   TableRow,
 } from "~/components/ui/table";
 import { DataTablePagination } from "./DataTablePagination";
+import { DataTableViewOptions } from "./DataTableViewOptions";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -29,6 +31,7 @@ export function DataTable<TData, TValue>({
   data,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 
   const table = useReactTable({
     data,
@@ -38,12 +41,15 @@ export function DataTable<TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     state: {
       sorting,
+      columnVisibility,
     },
     getPaginationRowModel: getPaginationRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
   });
 
   return (
     <div className="flex h-[calc(100vh-17.5rem)] flex-col justify-between gap-8">
+      <DataTableViewOptions table={table} />
       <Table className="overflow-y-auto">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
