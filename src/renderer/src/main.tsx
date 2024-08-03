@@ -5,7 +5,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
-import MainLayout from "./components/MainLayout";
+import Error from "./components/Error";
 import RecordForm from "./components/RecordForm";
 import RecordsTable from "./components/RecordsTable";
 import { Toaster } from "./components/ui/sonner";
@@ -15,33 +15,19 @@ const router = createHashRouter([
   {
     path: "/",
     Component: App,
-    errorElement: (
-      <div className="flex h-full w-full items-center justify-center">404</div>
-    ),
+    errorElement: <Error />,
     children: [
       {
-        path: "",
-        element: (
-          <MainLayout>
-            <RecordForm />
-          </MainLayout>
-        ),
+        path: "/",
+        element: <RecordForm />,
       },
       {
-        path: "records",
-        element: (
-          <MainLayout>
-            <RecordsTable />
-          </MainLayout>
-        ),
+        path: "/records",
+        element: <RecordsTable />,
       },
       {
-        path: "settings",
-        element: (
-          <div className="flex h-full w-full items-center justify-center">
-            404
-          </div>
-        ),
+        path: "/settings",
+        element: <Error />,
       },
     ],
   },

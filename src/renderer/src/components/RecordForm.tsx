@@ -5,6 +5,13 @@ import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { Button } from "./ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
 import { Checkbox } from "./ui/checkbox";
 import {
   FormControl,
@@ -96,223 +103,242 @@ const RecordForm = () => {
   }, [form.watch(["sk", "seniorCitizen"])]);
 
   return (
-    <FormProvider {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="grid w-full grid-cols-3 gap-4"
-      >
-        <FormField
-          control={form.control}
-          name="lastName"
-          render={({ field }) => (
-            <FormItem className="order-1">
-              <FormLabel>Last Name</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="firstName"
-          render={({ field }) => (
-            <FormItem className="order-4">
-              <FormLabel>First Name</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="middleName"
-          render={({ field }) => (
-            <FormItem className="order-7">
-              <FormLabel>Middle Name</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="contactNumber"
-          render={({ field }) => (
-            <FormItem className="order-10">
-              <FormLabel>Contact Number</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="applicationNumber"
-          render={({ field }) => (
-            <FormItem className="order-2">
-              <FormLabel>Application Number</FormLabel>
-              <FormControl>
-                <div className="flex w-full items-center gap-x-2">
-                  <Input {...field} />
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="icon"
-                        className="shrink-0"
-                        onClick={getLatestApplicationNumber}
-                      >
-                        <TextSearch />
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>Determine latest application #</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="applicationType"
-          render={({ field }) => (
-            <FormItem className="order-5">
-              <FormLabel>Application Type</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="-- Select --" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {formSchema.shape.applicationType.options.map((option) => (
-                    <SelectItem key={option} value={option}>
-                      {option.toUpperCase()}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="gender"
-          render={({ field }) => (
-            <FormItem className="order-8">
-              <FormLabel>Gender</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="-- Select --" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {formSchema.shape.gender.options.map((option) => (
-                    <SelectItem key={option} value={option}>
-                      {option.toUpperCase()}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="sk"
-          render={({ field }) => (
-            <FormItem className="order-11">
-              <FormLabel>SK</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="-- Select --" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {formSchema.shape.sk.options.map((option) => (
-                    <SelectItem key={option} value={option}>
-                      {option.toUpperCase()}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <div className="order-3 row-span-3 -mb-8 mt-8 flex justify-center rounded-md border p-4">
-          <div className="flex flex-col justify-around">
+    <Card>
+      <CardHeader>
+        <CardTitle>Form</CardTitle>
+        <CardDescription>Add a record</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <FormProvider {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="grid w-full grid-cols-3 gap-4"
+          >
             <FormField
               control={form.control}
-              name="indigenousPeople"
+              name="lastName"
               render={({ field }) => (
-                <FormItem className="flex items-center gap-4">
+                <FormItem className="order-1">
+                  <FormLabel>Last Name</FormLabel>
                   <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
+                    <Input {...field} />
                   </FormControl>
-                  <FormLabel>Indigenous People</FormLabel>
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="seniorCitizen"
-              render={({ field }) => (
-                <FormItem className="flex items-center gap-4">
-                  <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                      disabled={form.watch("sk") !== "no"}
-                    />
-                  </FormControl>
-                  <FormLabel>Senior Citizen</FormLabel>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <FormField
               control={form.control}
-              name="personWithDisability"
+              name="firstName"
               render={({ field }) => (
-                <FormItem className="flex items-center gap-4">
+                <FormItem className="order-4">
+                  <FormLabel>First Name</FormLabel>
                   <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
+                    <Input {...field} />
                   </FormControl>
-                  <FormLabel>Person With Disability</FormLabel>
+                  <FormMessage />
                 </FormItem>
               )}
             />
-          </div>
-        </div>
-        <Button type="submit" className="order-12 mt-8">
-          <SendHorizonal className="mr-2 h-4 w-4" />
-          Submit
-        </Button>
-      </form>
-    </FormProvider>
+            <FormField
+              control={form.control}
+              name="middleName"
+              render={({ field }) => (
+                <FormItem className="order-7">
+                  <FormLabel>Middle Name</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="contactNumber"
+              render={({ field }) => (
+                <FormItem className="order-10">
+                  <FormLabel>Contact Number</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="applicationNumber"
+              render={({ field }) => (
+                <FormItem className="order-2">
+                  <FormLabel>Application Number</FormLabel>
+                  <FormControl>
+                    <div className="flex w-full items-center gap-x-2">
+                      <Input {...field} />
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="icon"
+                            className="shrink-0"
+                            onClick={getLatestApplicationNumber}
+                          >
+                            <TextSearch />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Determine latest application #</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </div>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="applicationType"
+              render={({ field }) => (
+                <FormItem className="order-5">
+                  <FormLabel>Application Type</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="-- Select --" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {formSchema.shape.applicationType.options.map(
+                        (option) => (
+                          <SelectItem key={option} value={option}>
+                            {option.toUpperCase()}
+                          </SelectItem>
+                        ),
+                      )}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="gender"
+              render={({ field }) => (
+                <FormItem className="order-8">
+                  <FormLabel>Gender</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="-- Select --" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {formSchema.shape.gender.options.map((option) => (
+                        <SelectItem key={option} value={option}>
+                          {option.toUpperCase()}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="sk"
+              render={({ field }) => (
+                <FormItem className="order-11">
+                  <FormLabel>SK</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="-- Select --" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {formSchema.shape.sk.options.map((option) => (
+                        <SelectItem key={option} value={option}>
+                          {option.toUpperCase()}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="order-3 row-span-3 -mb-8 mt-8 flex justify-center rounded-md border p-4">
+              <div className="flex flex-col justify-around">
+                <FormField
+                  control={form.control}
+                  name="indigenousPeople"
+                  render={({ field }) => (
+                    <FormItem className="flex items-center gap-4">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <FormLabel>Indigenous People</FormLabel>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="seniorCitizen"
+                  render={({ field }) => (
+                    <FormItem className="flex items-center gap-4">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                          disabled={form.watch("sk") !== "no"}
+                        />
+                      </FormControl>
+                      <FormLabel>Senior Citizen</FormLabel>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="personWithDisability"
+                  render={({ field }) => (
+                    <FormItem className="flex items-center gap-4">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <FormLabel>Person With Disability</FormLabel>
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+            <Button type="submit" className="order-12 mt-8">
+              <SendHorizonal className="mr-2 h-4 w-4" />
+              Submit
+            </Button>
+          </form>
+        </FormProvider>
+      </CardContent>
+    </Card>
   );
 };
 

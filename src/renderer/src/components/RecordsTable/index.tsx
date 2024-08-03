@@ -1,12 +1,25 @@
 import { records } from "~/lib/fakeData";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
 
 const RecordsTable = () => {
   return (
-    <div className="-m-8 overflow-y-hidden rounded-lg">
-      <DataTable columns={columns} data={records} />
-    </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>Records</CardTitle>
+        <CardDescription>List of all records</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <DataTable columns={columns} data={records} />
+      </CardContent>
+    </Card>
   );
 };
 
