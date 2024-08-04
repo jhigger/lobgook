@@ -70,6 +70,7 @@ const Header = () => {
               size="icon"
               aria-label="Quit"
               onClick={handleQuit}
+              className="hover:bg-destructive hover:text-white"
             >
               <X className="size-5" />
             </Button>

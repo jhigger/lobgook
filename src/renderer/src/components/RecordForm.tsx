@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SendHorizonal, TextSearch } from "lucide-react";
+import { SendHorizontal, TextSearch } from "lucide-react";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -290,59 +290,62 @@ const RecordForm = () => {
                 </FormItem>
               )}
             />
-            <div className="order-3 row-span-3 -mb-8 mt-8 flex justify-center rounded-md border p-4">
-              <div className="flex flex-col justify-around">
-                <FormField
-                  control={form.control}
-                  name="indigenousPeople"
-                  render={({ field }) => (
-                    <FormItem className="flex items-center gap-4">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <FormLabel>Indigenous People</FormLabel>
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="seniorCitizen"
-                  render={({ field }) => (
-                    <FormItem className="flex items-center gap-4">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                          disabled={form.watch("sk") !== "no"}
-                        />
-                      </FormControl>
-                      <FormLabel>Senior Citizen</FormLabel>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="personWithDisability"
-                  render={({ field }) => (
-                    <FormItem className="flex items-center gap-4">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <FormLabel>Person With Disability</FormLabel>
-                    </FormItem>
-                  )}
-                />
+            <FormItem className="order-3 row-span-3">
+              <FormLabel>Options</FormLabel>
+              <div className="flex h-full justify-center rounded-md border p-4">
+                <div className="flex flex-col justify-around">
+                  <FormField
+                    control={form.control}
+                    name="indigenousPeople"
+                    render={({ field }) => (
+                      <FormItem className="flex items-center gap-4">
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                        </FormControl>
+                        <FormLabel>Indigenous People</FormLabel>
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="seniorCitizen"
+                    render={({ field }) => (
+                      <FormItem className="flex items-center gap-4">
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                            disabled={form.watch("sk") !== "no"}
+                          />
+                        </FormControl>
+                        <FormLabel>Senior Citizen</FormLabel>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="personWithDisability"
+                    render={({ field }) => (
+                      <FormItem className="flex items-center gap-4">
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                        </FormControl>
+                        <FormLabel>Person With Disability</FormLabel>
+                      </FormItem>
+                    )}
+                  />
+                </div>
               </div>
-            </div>
+            </FormItem>
             <Button type="submit" className="order-12 mt-8">
-              <SendHorizonal className="mr-2 h-4 w-4" />
+              <SendHorizontal className="mr-2 h-4 w-4" />
               Submit
             </Button>
           </form>

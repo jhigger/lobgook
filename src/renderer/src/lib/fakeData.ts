@@ -1,9 +1,13 @@
 import { RecordType } from "./types";
 
+const date = new Date();
+
 export const records: RecordType[] = [
   {
     id: 1,
-    createdAt: new Date().toISOString(),
+    createdAt: new Date(
+      date.getTime() - 6 * 24 * 60 * 60 * 1000,
+    ).toISOString(),
     lastName: "Doe",
     firstName: "John",
     middleName: "Aaa",
@@ -18,7 +22,9 @@ export const records: RecordType[] = [
   },
   {
     id: 2,
-    createdAt: new Date().toISOString(),
+    createdAt: new Date(
+      date.getTime() - 5 * 24 * 60 * 60 * 1000,
+    ).toISOString(),
     lastName: "Doe",
     firstName: "Jane",
     middleName: "Bbb",
@@ -33,7 +39,9 @@ export const records: RecordType[] = [
   },
   {
     id: 3,
-    createdAt: new Date().toISOString(),
+    createdAt: new Date(
+      date.getTime() - 4 * 24 * 60 * 60 * 1000,
+    ).toISOString(),
     lastName: "Doe",
     firstName: "Mary",
     middleName: "Ccc",
@@ -48,7 +56,9 @@ export const records: RecordType[] = [
   },
   {
     id: 4,
-    createdAt: new Date().toISOString(),
+    createdAt: new Date(
+      date.getTime() - 3 * 24 * 60 * 60 * 1000,
+    ).toISOString(),
     lastName: "Doe",
     firstName: "Mark",
     middleName: "Ddd",
@@ -63,7 +73,9 @@ export const records: RecordType[] = [
   },
   {
     id: 5,
-    createdAt: new Date().toISOString(),
+    createdAt: new Date(
+      date.getTime() - 2 * 24 * 60 * 60 * 1000,
+    ).toISOString(),
     lastName: "Doe",
     firstName: "Alice",
     middleName: "Eee",
@@ -76,10 +88,11 @@ export const records: RecordType[] = [
     seniorCitizen: false,
     personWithDisability: false,
   },
-
   {
     id: 6,
-    createdAt: new Date().toISOString(),
+    createdAt: new Date(
+      date.getTime() - 1 * 24 * 60 * 60 * 1000,
+    ).toISOString(),
     lastName: "Nepomuceno",
     firstName: "John Jhigger",
     middleName: "Ventura",

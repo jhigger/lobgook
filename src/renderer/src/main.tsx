@@ -15,7 +15,11 @@ const router = createHashRouter([
   {
     path: "/",
     Component: App,
-    errorElement: <Error />,
+    errorElement: (
+      <div className="flex h-screen p-8">
+        <Error />
+      </div>
+    ),
     children: [
       {
         path: "/",

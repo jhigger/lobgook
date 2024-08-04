@@ -58,10 +58,15 @@ export const columns: ColumnDef<RecordType>[] = [
   },
   {
     accessorKey: "applicationType",
-    header: "Application Type",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Application Type" />
+    ),
     cell: ({ getValue }) => {
       const value = getValue() as string;
       return <span className="capitalize">{value}</span>;
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
     },
   },
   {

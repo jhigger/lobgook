@@ -37,8 +37,6 @@ export function DataTableFacetedFilter<TData, TValue>({
     column?.getFilterValue() as Array<string | boolean>,
   );
 
-  console.log(column?.getFilterValue);
-
   return (
     <Popover>
       <PopoverTrigger asChild>

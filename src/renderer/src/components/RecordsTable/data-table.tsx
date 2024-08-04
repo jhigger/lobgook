@@ -115,14 +115,12 @@ export function DataTable<TData extends RecordType, TValue>({
   return (
     <Card>
       <CardHeader>
-        <div>
-          <CardTitle>Records</CardTitle>
-          <CardDescription>List of all records</CardDescription>
-        </div>
+        <CardTitle>Records</CardTitle>
+        <CardDescription>List of all records</CardDescription>
         <ToolBar table={table} />
       </CardHeader>
       <CardContent>
-        <div className="flex h-[calc(100vh-20.5rem)] flex-col justify-between gap-8">
+        <div className="flex h-[calc(100vh-23.5rem)] flex-col justify-between gap-8">
           <Table>
             <TableHeader className="sticky top-0 bg-background shadow">
               {table.getHeaderGroups().map((headerGroup) => (
