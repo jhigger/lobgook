@@ -41,8 +41,20 @@ export function DataTableFacetedFilter<TData, TValue>({
     <Popover>
       <PopoverTrigger asChild>
         <Button variant="outline" size="sm" className="h-8 border-dashed">
-          <PlusCircle className="mr-2 h-4 w-4" />
-          {title}
+          <PlusCircle
+            className={cn(
+              "mr-2 h-4 w-4 text-muted-foreground",
+              selectedValues.size > 0 && "text-primary",
+            )}
+          />
+          <span
+            className={cn(
+              "text-muted-foreground",
+              selectedValues.size > 0 && "text-primary",
+            )}
+          >
+            {title}
+          </span>
           {selectedValues?.size > 0 && (
             <>
               <Separator orientation="vertical" className="mx-2 h-4" />

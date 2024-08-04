@@ -6,6 +6,7 @@ import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { DataTableFacetedFilter } from "./data-table-faceted-filter";
 import { DataTableViewOptions } from "./DataTableViewOptions";
+import DatePicker from "./DatePicker";
 
 const applicationType: {
   label: string;
@@ -60,11 +61,13 @@ const personWithDisability: {
   { label: "No", value: false },
 ];
 
-interface ToolBarProps<TData> {
+type ToolBarProps<TData> = {
   table: Table<TData>;
-}
+};
 
-const ToolBar = <TData extends RecordType>({ table }: ToolBarProps<TData>) => {
+const DataTableToolBar = <TData extends RecordType>({
+  table,
+}: ToolBarProps<TData>) => {
   return (
     <div className="flex flex-col gap-2 pt-4">
       <div className="flex justify-between gap-2">
@@ -84,6 +87,7 @@ const ToolBar = <TData extends RecordType>({ table }: ToolBarProps<TData>) => {
         <DataTableViewOptions table={table} />
       </div>
       <div className="flex w-full flex-wrap items-center gap-2">
+        <DatePicker table={table} />
         {table.getColumn("applicationType") && (
           <DataTableFacetedFilter
             column={table.getColumn("applicationType")}
@@ -142,4 +146,4 @@ const ToolBar = <TData extends RecordType>({ table }: ToolBarProps<TData>) => {
   );
 };
 
-export default ToolBar;
+export default DataTableToolBar;

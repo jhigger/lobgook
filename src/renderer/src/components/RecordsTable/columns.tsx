@@ -28,6 +28,22 @@ export const columns: ColumnDef<RecordType>[] = [
       const date = getValue() as string;
       return formatISODateString(date);
     },
+    filterFn: (row, columnId, value) => {
+      const date = row.getValue(columnId) as RecordType["createdAt"];
+      const [start, end] = value; // value => two date input values
+      //If one filter defined and date is null filter it
+      if ((start || end) && !date) return false;
+      if (start && !end) {
+        return new Date(date).getTime() >= start.getTime();
+      } else if (!start && end) {
+        return new Date(date).getTime() <= end.getTime();
+      } else if (start && end) {
+        return (
+          new Date(date).getTime() >= start.getTime() &&
+          new Date(date).getTime() <= end.getTime()
+        );
+      } else return true;
+    },
   },
   // {
   //   accessorFn: (row) => `${row.firstName} ${row.middleName}  ${row.lastName}`,

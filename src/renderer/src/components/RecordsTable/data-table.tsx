@@ -33,7 +33,7 @@ import {
   CardTitle,
 } from "../ui/card";
 import { DataTablePagination } from "./DataTablePagination";
-import ToolBar from "./ToolBar";
+import DataTableToolBar from "./DataTableToolBar";
 interface DataTableProps<TData extends RecordType, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -117,10 +117,10 @@ export function DataTable<TData extends RecordType, TValue>({
       <CardHeader>
         <CardTitle>Records</CardTitle>
         <CardDescription>List of all records</CardDescription>
-        <ToolBar table={table} />
+        <DataTableToolBar table={table} />
       </CardHeader>
       <CardContent>
-        <div className="flex h-[calc(100vh-23.5rem)] flex-col justify-between gap-8">
+        <div className="flex h-[calc(100vh-25.8rem)] flex-col justify-between gap-8">
           <Table>
             <TableHeader className="sticky top-0 bg-background shadow">
               {table.getHeaderGroups().map((headerGroup) => (
