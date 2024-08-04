@@ -80,9 +80,12 @@ export const columns: ColumnDef<RecordType>[] = [
   },
   {
     accessorKey: "gender",
-    header: "Gender",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Gender" />
+    ),
     cell: ({ getValue }) => {
-      const value = getValue() as string;
+      const value = getValue() as RecordType["gender"];
+
       return (
         <Badge
           variant="secondary"
@@ -95,6 +98,9 @@ export const columns: ColumnDef<RecordType>[] = [
         </Badge>
       );
     },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
   },
   {
     accessorKey: "sk",
@@ -104,20 +110,32 @@ export const columns: ColumnDef<RecordType>[] = [
       if (value !== "no") return value;
       return <CircleMinus className="rounded-full bg-secondary" />;
     },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
   },
   {
     accessorKey: "indigenousPeople",
     header: "Indigenous",
     cell: BooleanCell,
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
   },
   {
     accessorKey: "seniorCitizen",
     header: "Senior",
     cell: BooleanCell,
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
   },
   {
     accessorKey: "personWithDisability",
     header: "PWD",
     cell: BooleanCell,
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
   },
 ];

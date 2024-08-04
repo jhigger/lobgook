@@ -3,6 +3,8 @@ import {
   ColumnFiltersState,
   flexRender,
   getCoreRowModel,
+  getFacetedRowModel,
+  getFacetedUniqueValues,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
@@ -14,7 +16,6 @@ import { useState } from "react";
 
 import { RankingInfo, rankItem } from "@tanstack/match-sorter-utils";
 import { FilterFn } from "@tanstack/react-table";
-import { Search } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -23,7 +24,7 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
-import DebouncedInput from "../DebouncedInput";
+import { RecordType } from "~/renderer/lib/types";
 import {
   Card,
   CardContent,
@@ -31,10 +32,9 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import { Label } from "../ui/label";
 import { DataTablePagination } from "./DataTablePagination";
-import { DataTableViewOptions } from "./DataTableViewOptions";
-interface DataTableProps<TData, TValue> {
+import ToolBar from "./ToolBar";
+interface DataTableProps<TData extends RecordType, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
@@ -79,7 +79,7 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
 //   return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir;
 // };
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends RecordType, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -88,27 +88,28 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
 
-  const table = useReactTable({
+  const table = useReactTable<TData>({
     data,
     columns,
-    filterFns: {
-      fuzzy: fuzzyFilter, //define as a filter function that can be used in column definitions
-    },
-    getCoreRowModel: getCoreRowModel(),
-    onSortingChange: setSorting,
-    getSortedRowModel: getSortedRowModel(),
     state: {
       sorting,
       columnVisibility,
       columnFilters,
       globalFilter,
     },
-    getPaginationRowModel: getPaginationRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
+    filterFns: {
+      fuzzy: fuzzyFilter, //define as a filter function that can be used in column definitions
+    },
+    onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
-    getFilteredRowModel: getFilteredRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
     onGlobalFilterChange: setGlobalFilter,
-    globalFilterFn: "fuzzy",
+    getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFacetedRowModel: getFacetedRowModel(),
+    getFacetedUniqueValues: getFacetedUniqueValues(),
   });
 
   return (
@@ -118,25 +119,7 @@ export function DataTable<TData, TValue>({
           <CardTitle>Records</CardTitle>
           <CardDescription>List of all records</CardDescription>
         </div>
-
-        <div className="flex items-center pt-4">
-          <div className="relative">
-            <Label htmlFor="search">
-              <Search className="absolute left-2.5 top-2 h-4 w-4 text-muted-foreground" />
-            </Label>
-            <DebouncedInput
-              id="search"
-              type="search"
-              placeholder="Search..."
-              value={globalFilter}
-              onChange={(value) => setGlobalFilter(String(value))}
-              className="h-8 max-w-sm pl-8"
-            />
-          </div>
-          <div className="ml-auto">
-            <DataTableViewOptions table={table} />
-          </div>
-        </div>
+        <ToolBar table={table} />
       </CardHeader>
       <CardContent>
         <div className="flex h-[calc(100vh-20.5rem)] flex-col justify-between gap-8">

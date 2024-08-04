@@ -49,9 +49,9 @@ const formSchema = z.object({
   ]),
   gender: z.enum(["male", "female"]),
   applicationNumber: z.string().min(1),
-  indigenousPeople: z.boolean().optional(),
-  seniorCitizen: z.boolean().optional(),
-  personWithDisability: z.boolean().optional(),
+  indigenousPeople: z.boolean().optional().default(false),
+  seniorCitizen: z.boolean().optional().default(false),
+  personWithDisability: z.boolean().optional().default(false),
   sk: z.enum(["no", "15 to 17", "18 to 30"]),
 });
 
