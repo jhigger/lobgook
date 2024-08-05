@@ -13,6 +13,7 @@ import {
   RecordDocType,
   RecordUUID,
 } from "~/lib/Record.model";
+import { initStoragePersistence, showEstimatedQuota } from "./utils";
 
 addRxPlugin(RxDBJsonDumpPlugin);
 
@@ -119,6 +120,9 @@ export const db = (): DBType => {
             schema: recordsSchema,
           },
         });
+
+        await showEstimatedQuota();
+        await initStoragePersistence();
       }
     },
     addRecord: async (record: RecordDocType) => {
