@@ -1,9 +1,22 @@
-import { createRxDatabase, RxJsonSchema } from "rxdb";
+import {
+  addRxPlugin,
+  createRxDatabase,
+  RxDumpDatabase,
+  RxJsonSchema,
+} from "rxdb";
+import { RxDBJsonDumpPlugin } from "rxdb/plugins/json-dump";
 import { getRxStorageDexie } from "rxdb/plugins/storage-dexie";
 import { BehaviorSubject } from "rxjs";
-import { MyDatabase, RecordDocType, RecordUUID } from "~/lib/Record.model";
-// Good article that talk about ts typing and rxdb: https://rxdb.info/tutorials/typescript.html
+import {
+  MyDatabase,
+  MyDatabaseCollections,
+  RecordDocType,
+  RecordUUID,
+} from "~/lib/Record.model";
 
+addRxPlugin(RxDBJsonDumpPlugin);
+
+// Good article that talk about ts typing and rxdb: https://rxdb.info/tutorials/typescript.html
 let database: MyDatabase;
 
 export type DBType = {
@@ -14,6 +27,8 @@ export type DBType = {
   observableRecords: () => BehaviorSubject<RecordDocType[]>;
   hasSetup: () => boolean;
   checkApplicationNumberExists: (applicationNumber: string) => Promise<boolean>;
+  importJSON: (json: RxDumpDatabase<MyDatabaseCollections>) => Promise<void>;
+  exportJSON: () => Promise<RxDumpDatabase<MyDatabaseCollections>>;
 };
 
 const recordsSchema: RxJsonSchema<RecordDocType> = {
@@ -139,5 +154,8 @@ export const db = (): DBType => {
         .then((record) => (record ? true : false));
       return exists;
     },
+    importJSON: async (json: RxDumpDatabase<MyDatabaseCollections>) =>
+      database.importJSON(json),
+    exportJSON: async () => await database.exportJSON(),
   };
 };
