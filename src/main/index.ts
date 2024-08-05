@@ -78,6 +78,23 @@ app
       // dock icon is clicked and there are no other windows open.
       if (BrowserWindow.getAllWindows().length === 0) createWindow();
     });
+
+    const gotTheLock = app.requestSingleInstanceLock();
+
+    if (!gotTheLock) {
+      app.quit();
+    } else {
+      app.on("second-instance", () => {
+        // Someone tried to run a second instance, we should focus our window.
+        if (mainWindow) {
+          if (mainWindow.isMinimized()) mainWindow.restore();
+          mainWindow.focus();
+        }
+      });
+
+      // Create myWindow, load the rest of the app, etc...
+      app.on("ready", () => {});
+    }
   })
   .catch((err) => console.error(err));
 
