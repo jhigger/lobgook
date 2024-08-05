@@ -5,7 +5,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import useDatabase from "../hooks/useDatabase";
-import { getLatestApplicationNumber } from "../lib/utils";
+import { capitalize, getLatestApplicationNumber } from "../lib/utils";
 import Loader from "./Loader";
 import { Button } from "./ui/button";
 import {
@@ -34,9 +34,9 @@ import {
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 const formSchema = z.object({
-  lastName: z.string().min(1),
-  firstName: z.string().min(1),
-  middleName: z.string().optional(),
+  lastName: z.string().min(1).transform(capitalize),
+  firstName: z.string().min(1).transform(capitalize),
+  middleName: z.string().transform(capitalize).optional(),
   contactNumber: z.string().optional(),
   applicationType: z.enum([
     "registration",
@@ -140,7 +140,7 @@ const RecordForm = () => {
                 <FormItem className="order-1">
                   <FormLabel>Last Name</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input className="capitalize" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -153,7 +153,7 @@ const RecordForm = () => {
                 <FormItem className="order-4">
                   <FormLabel>First Name</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input className="capitalize" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -166,7 +166,7 @@ const RecordForm = () => {
                 <FormItem className="order-7">
                   <FormLabel>Middle Name</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input className="capitalize" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -179,7 +179,7 @@ const RecordForm = () => {
                 <FormItem className="order-10">
                   <FormLabel>Contact Number</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input className="capitalize" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -193,7 +193,12 @@ const RecordForm = () => {
                   <FormLabel>Application Number</FormLabel>
                   <FormControl>
                     <div className="flex w-full items-center gap-x-2">
-                      <Input {...field} type="number" min={0} />
+                      <Input
+                        className="capitalize"
+                        {...field}
+                        type="number"
+                        min={0}
+                      />
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <Button

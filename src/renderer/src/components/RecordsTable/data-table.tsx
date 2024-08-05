@@ -16,6 +16,7 @@ import { useState } from "react";
 
 import { RankingInfo, rankItem } from "@tanstack/match-sorter-utils";
 import { FilterFn } from "@tanstack/react-table";
+import { useReadLocalStorage } from "usehooks-ts";
 import {
   Table,
   TableBody,
@@ -25,6 +26,7 @@ import {
   TableRow,
 } from "~/components/ui/table";
 import { RecordDocType } from "~/renderer/lib/Record.model";
+import { cn } from "~/renderer/lib/utils";
 import Loader from "../Loader";
 import {
   Card,
@@ -86,7 +88,11 @@ export function DataTable<TData extends RecordDocType, TValue>({
   data,
   loading,
 }: DataTableProps<TData, TValue>) {
-  const [sorting, setSorting] = useState<SortingState>([]);
+  const striped = useReadLocalStorage("striped-table") as boolean;
+
+  const [sorting, setSorting] = useState<SortingState>([
+    { id: "createdAt", desc: true },
+  ]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
@@ -118,8 +124,16 @@ export function DataTable<TData extends RecordDocType, TValue>({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Records</CardTitle>
-        <CardDescription>List of all records</CardDescription>
+        <div className="flex justify-between gap-4">
+          <div className="flex flex-col gap-y-1.5">
+            <CardTitle>Records</CardTitle>
+            <CardDescription>List of all records</CardDescription>
+          </div>
+          <div className="flex flex-col items-end">
+            <CardTitle>{loading ? <Loader /> : data.length}</CardTitle>
+            <CardDescription>Total records</CardDescription>
+          </div>
+        </div>
         <DataTableToolBar table={table} />
       </CardHeader>
       <CardContent>
@@ -149,6 +163,7 @@ export function DataTable<TData extends RecordDocType, TValue>({
                   <TableRow
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
+                    className={cn(striped && "odd:bg-muted")}
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id}>

@@ -30,6 +30,15 @@ export function getLatestApplicationNumber(records: RecordDocType[]) {
   return latestApplicationNumber;
 }
 
+export function capitalize(str: string) {
+  const regex = /(?:^|\s|["'([{])+\S/g;
+  const result = str
+    .trim()
+    .toLowerCase()
+    .replace(regex, (match: string) => match.toUpperCase());
+  return result;
+}
+
 function formatBytes(bytes: number, decimals = 2) {
   if (!+bytes) return "0 Bytes";
 
