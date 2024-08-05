@@ -1,13 +1,11 @@
-import { RecordType } from "./types";
+import { RecordDocType } from "./Record.model";
 
 const date = new Date();
 
-export const records: RecordType[] = [
+export const records: RecordDocType[] = [
   {
-    id: 1,
-    createdAt: new Date(
-      date.getTime() - 6 * 24 * 60 * 60 * 1000,
-    ).toISOString(),
+    uuid: crypto.randomUUID(),
+    createdAt: new Date(date.getTime() - 6 * 24 * 60 * 60 * 1000).toISOString(),
     lastName: "Doe",
     firstName: "John",
     middleName: "Aaa",
@@ -21,10 +19,8 @@ export const records: RecordType[] = [
     personWithDisability: false,
   },
   {
-    id: 2,
-    createdAt: new Date(
-      date.getTime() - 5 * 24 * 60 * 60 * 1000,
-    ).toISOString(),
+    uuid: crypto.randomUUID(),
+    createdAt: new Date(date.getTime() - 5 * 24 * 60 * 60 * 1000).toISOString(),
     lastName: "Doe",
     firstName: "Jane",
     middleName: "Bbb",
@@ -38,10 +34,8 @@ export const records: RecordType[] = [
     personWithDisability: false,
   },
   {
-    id: 3,
-    createdAt: new Date(
-      date.getTime() - 4 * 24 * 60 * 60 * 1000,
-    ).toISOString(),
+    uuid: crypto.randomUUID(),
+    createdAt: new Date(date.getTime() - 4 * 24 * 60 * 60 * 1000).toISOString(),
     lastName: "Doe",
     firstName: "Mary",
     middleName: "Ccc",
@@ -55,10 +49,8 @@ export const records: RecordType[] = [
     personWithDisability: true,
   },
   {
-    id: 4,
-    createdAt: new Date(
-      date.getTime() - 3 * 24 * 60 * 60 * 1000,
-    ).toISOString(),
+    uuid: crypto.randomUUID(),
+    createdAt: new Date(date.getTime() - 3 * 24 * 60 * 60 * 1000).toISOString(),
     lastName: "Doe",
     firstName: "Mark",
     middleName: "Ddd",
@@ -72,10 +64,8 @@ export const records: RecordType[] = [
     personWithDisability: true,
   },
   {
-    id: 5,
-    createdAt: new Date(
-      date.getTime() - 2 * 24 * 60 * 60 * 1000,
-    ).toISOString(),
+    uuid: crypto.randomUUID(),
+    createdAt: new Date(date.getTime() - 2 * 24 * 60 * 60 * 1000).toISOString(),
     lastName: "Doe",
     firstName: "Alice",
     middleName: "Eee",
@@ -89,20 +79,63 @@ export const records: RecordType[] = [
     personWithDisability: false,
   },
   {
-    id: 6,
-    createdAt: new Date(
-      date.getTime() - 1 * 24 * 60 * 60 * 1000,
-    ).toISOString(),
-    lastName: "Nepomuceno",
-    firstName: "John Jhigger",
-    middleName: "Ventura",
+    uuid: crypto.randomUUID(),
+    createdAt: new Date(date.getTime() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+    lastName: "Doe",
+    firstName: "Bob",
+    middleName: "Fff",
     contactNumber: "09123456789",
     applicationType: "transfer within",
     gender: "male",
     applicationNumber: "1234567895",
     sk: "no",
+    indigenousPeople: true,
+    seniorCitizen: true,
+    personWithDisability: true,
+  },
+  {
+    uuid: crypto.randomUUID(),
+    createdAt: new Date(date.getTime() - 0 * 24 * 60 * 60 * 1000).toISOString(),
+    lastName: "Doe",
+    firstName: "Charlie",
+    middleName: "Ggg",
+    contactNumber: "09123456789",
+    applicationType: "transfer with reactivation",
+    gender: "male",
+    applicationNumber: "1234567896",
+    sk: "18 to 30",
     indigenousPeople: false,
     seniorCitizen: false,
+    personWithDisability: false,
+  },
+  {
+    uuid: crypto.randomUUID(),
+    createdAt: new Date(date.getTime() - 0 * 24 * 60 * 60 * 1000).toISOString(),
+    lastName: "Doe",
+    firstName: "Dave",
+    middleName: "Hhh",
+    contactNumber: "09123456789",
+    applicationType: "transfer with reactivation and correction",
+    gender: "male",
+    applicationNumber: "1234567897",
+    sk: "no",
+    indigenousPeople: true,
+    seniorCitizen: true,
     personWithDisability: true,
+  },
+  {
+    uuid: crypto.randomUUID(),
+    createdAt: new Date(date.getTime() - 0 * 24 * 60 * 60 * 1000).toISOString(),
+    lastName: "Doe",
+    firstName: "Eve",
+    middleName: "Iii",
+    contactNumber: "09123456789",
+    applicationType: "post to Local",
+    gender: "female",
+    applicationNumber: "1234567898",
+    sk: "18 to 30",
+    indigenousPeople: false,
+    seniorCitizen: false,
+    personWithDisability: false,
   },
 ];

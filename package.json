@@ -46,6 +46,8 @@
     "react-day-picker": "8.10.1",
     "react-hook-form": "^7.52.1",
     "react-router-dom": "^6.26.0",
+    "rxdb": "^15.30.1",
+    "rxjs": "^7.8.1",
     "sonner": "^1.5.0",
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",

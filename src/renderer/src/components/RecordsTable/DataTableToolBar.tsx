@@ -1,6 +1,6 @@
 import { Table } from "@tanstack/react-table";
 import { Ban, Search } from "lucide-react";
-import { RecordType } from "~/renderer/lib/types";
+import { RecordDocType } from "~/renderer/lib/Record.model";
 import DebouncedInput from "../DebouncedInput";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
@@ -10,7 +10,7 @@ import DatePicker from "./DatePicker";
 
 const applicationType: {
   label: string;
-  value: RecordType["applicationType"];
+  value: RecordDocType["applicationType"];
 }[] = [
   { label: "Registration", value: "registration" },
   { label: "Reactivation", value: "reactivation" },
@@ -29,12 +29,12 @@ const applicationType: {
   { label: "Post to Local", value: "post to Local" },
 ];
 
-const genders: { label: string; value: RecordType["gender"] }[] = [
+const genders: { label: string; value: RecordDocType["gender"] }[] = [
   { label: "Male", value: "male" },
   { label: "Female", value: "female" },
 ];
 
-const sk: { label: string; value: RecordType["sk"] }[] = [
+const sk: { label: string; value: RecordDocType["sk"] }[] = [
   { label: "15-17", value: "15 to 17" },
   { label: "18-30", value: "18 to 30" },
   { label: "No", value: "no" },
@@ -42,20 +42,23 @@ const sk: { label: string; value: RecordType["sk"] }[] = [
 
 const indigenousPeople: {
   label: string;
-  value: RecordType["indigenousPeople"];
+  value: RecordDocType["indigenousPeople"];
 }[] = [
   { label: "Yes", value: true },
   { label: "No", value: false },
 ];
 
-const seniorCitizen: { label: string; value: RecordType["seniorCitizen"] }[] = [
+const seniorCitizen: {
+  label: string;
+  value: RecordDocType["seniorCitizen"];
+}[] = [
   { label: "Yes", value: true },
   { label: "No", value: false },
 ];
 
 const personWithDisability: {
   label: string;
-  value: RecordType["personWithDisability"];
+  value: RecordDocType["personWithDisability"];
 }[] = [
   { label: "Yes", value: true },
   { label: "No", value: false },
@@ -65,7 +68,7 @@ type ToolBarProps<TData> = {
   table: Table<TData>;
 };
 
-const DataTableToolBar = <TData extends RecordType>({
+const DataTableToolBar = <TData extends RecordDocType>({
   table,
 }: ToolBarProps<TData>) => {
   return (

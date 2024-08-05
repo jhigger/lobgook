@@ -1,11 +1,11 @@
 import { CellContext, ColumnDef } from "@tanstack/react-table";
 import { CircleCheck, CircleMinus, CircleX } from "lucide-react";
-import { RecordType } from "~/renderer/lib/types";
+import { RecordDocType } from "~/renderer/lib/Record.model";
 import { cn, formatISODateString } from "~/renderer/lib/utils";
 import { Badge } from "../ui/badge";
 import { DataTableColumnHeader } from "./DataTableColumnHeader";
 
-const BooleanCell = ({ getValue }: CellContext<RecordType, unknown>) => {
+const BooleanCell = ({ getValue }: CellContext<RecordDocType, unknown>) => {
   const value = getValue() as boolean;
   return (
     <div className="text-white">
@@ -18,7 +18,7 @@ const BooleanCell = ({ getValue }: CellContext<RecordType, unknown>) => {
   );
 };
 
-export const columns: ColumnDef<RecordType>[] = [
+export const columns: ColumnDef<RecordDocType>[] = [
   {
     accessorKey: "createdAt",
     header: ({ column }) => (
@@ -29,7 +29,7 @@ export const columns: ColumnDef<RecordType>[] = [
       return formatISODateString(date);
     },
     filterFn: (row, columnId, value) => {
-      const date = row.getValue(columnId) as RecordType["createdAt"];
+      const date = row.getValue(columnId) as RecordDocType["createdAt"];
       const [start, end] = value; // value => two date input values
       //If one filter defined and date is null filter it
       if ((start || end) && !date) return false;
@@ -105,7 +105,7 @@ export const columns: ColumnDef<RecordType>[] = [
       <DataTableColumnHeader column={column} title="Gender" />
     ),
     cell: ({ getValue }) => {
-      const value = getValue() as RecordType["gender"];
+      const value = getValue() as RecordDocType["gender"];
 
       return (
         <Badge
@@ -127,7 +127,7 @@ export const columns: ColumnDef<RecordType>[] = [
     accessorKey: "sk",
     header: "SK",
     cell: ({ getValue }) => {
-      const value = getValue() as RecordType["sk"];
+      const value = getValue() as RecordDocType["sk"];
       if (value !== "no") return value;
       return <CircleMinus className="rounded-full bg-secondary" />;
     },

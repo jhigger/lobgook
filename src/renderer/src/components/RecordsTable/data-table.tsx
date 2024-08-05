@@ -24,7 +24,8 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
-import { RecordType } from "~/renderer/lib/types";
+import { RecordDocType } from "~/renderer/lib/Record.model";
+import Loader from "../Loader";
 import {
   Card,
   CardContent,
@@ -34,9 +35,10 @@ import {
 } from "../ui/card";
 import { DataTablePagination } from "./DataTablePagination";
 import DataTableToolBar from "./DataTableToolBar";
-interface DataTableProps<TData extends RecordType, TValue> {
+interface DataTableProps<TData extends RecordDocType, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  loading: boolean;
 }
 
 declare module "@tanstack/react-table" {
@@ -79,9 +81,10 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
 //   return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir;
 // };
 
-export function DataTable<TData extends RecordType, TValue>({
+export function DataTable<TData extends RecordDocType, TValue>({
   columns,
   data,
+  loading,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -163,7 +166,7 @@ export function DataTable<TData extends RecordType, TValue>({
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    No results.
+                    {!!loading ? <Loader /> : "No Records"}
                   </TableCell>
                 </TableRow>
               )}

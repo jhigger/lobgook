@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import React, { useEffect } from "react";
 import { DateRange } from "react-day-picker";
-import { RecordType } from "~/renderer/lib/types";
+import { RecordDocType } from "~/renderer/lib/Record.model";
 import { cn } from "~/renderer/lib/utils";
 import { Button } from "../ui/button";
 import { Calendar } from "../ui/calendar";
@@ -13,7 +13,7 @@ type DatePickerProps<TData> = React.HTMLAttributes<HTMLDivElement> & {
   table: Table<TData>;
 };
 
-const DatePicker = <TData extends RecordType>({
+const DatePicker = <TData extends RecordDocType>({
   className,
   table,
 }: DatePickerProps<TData>) => {
@@ -62,7 +62,7 @@ const DatePicker = <TData extends RecordType>({
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-0" align="end">
+        <PopoverContent className="w-auto p-0" align="start">
           <Calendar
             initialFocus
             mode="range"

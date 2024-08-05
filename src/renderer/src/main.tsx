@@ -8,6 +8,7 @@ import App from "./App";
 import Error from "./components/Error";
 import RecordForm from "./components/RecordForm";
 import RecordsTable from "./components/RecordsTable";
+import Settings from "./components/Settings";
 import { Toaster } from "./components/ui/sonner";
 import { TooltipProvider } from "./components/ui/tooltip";
 
@@ -31,7 +32,7 @@ const router = createHashRouter([
       },
       {
         path: "/settings",
-        element: <Error />,
+        element: <Settings />,
       },
     ],
   },

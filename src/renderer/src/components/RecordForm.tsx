@@ -4,7 +4,9 @@ import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-import { records } from "../lib/fakeData";
+import useDatabase from "../hooks/useDatabase";
+import { getLatestApplicationNumber } from "../lib/utils";
+import Loader from "./Loader";
 import { Button } from "./ui/button";
 import {
   Card,
@@ -48,7 +50,7 @@ const formSchema = z.object({
     "post to Local",
   ]),
   gender: z.enum(["male", "female"]),
-  applicationNumber: z.string().min(1),
+  applicationNumber: z.coerce.string().min(1),
   indigenousPeople: z.boolean().optional().default(false),
   seniorCitizen: z.boolean().optional().default(false),
   personWithDisability: z.boolean().optional().default(false),
@@ -72,23 +74,29 @@ const defaultValues: FormSchemaType = {
 };
 
 const RecordForm = () => {
-  const latestApplicationNumber = String(
-    Number(
-      records.reduce((prev, current) => {
-        return prev &&
-          Number(prev.applicationNumber) > Number(current.applicationNumber)
-          ? prev
-          : current;
-      }).applicationNumber,
-    ) + 1,
-  );
+  const { loading, records, database } = useDatabase();
 
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues,
   });
 
-  const onSubmit = (data: FormSchemaType) => {
+  const onSubmit = async (data: FormSchemaType) => {
+    const exists = await database.checkApplicationNumberExists(
+      form.getValues("applicationNumber"),
+    );
+    if (exists) {
+      return form.setError("applicationNumber", {
+        message: "Application number already exists",
+      });
+    }
+
+    await database.addRecord({
+      uuid: crypto.randomUUID(),
+      createdAt: new Date().toISOString(),
+      ...data,
+    });
+
     toast("You submitted the following values:", {
       className: "w-fit right-0 bg-green-500",
       description: (
@@ -103,8 +111,9 @@ const RecordForm = () => {
     form.clearErrors();
   };
 
-  const getLatestApplicationNumber = () => {
-    form.setValue("applicationNumber", latestApplicationNumber);
+  const setLatestApplicationNumber = async () => {
+    form.setValue("applicationNumber", getLatestApplicationNumber(records));
+    form.clearErrors("applicationNumber");
   };
 
   useEffect(() => {
@@ -184,7 +193,7 @@ const RecordForm = () => {
                   <FormLabel>Application Number</FormLabel>
                   <FormControl>
                     <div className="flex w-full items-center gap-x-2">
-                      <Input {...field} />
+                      <Input {...field} type="number" min={0} />
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <Button
@@ -192,9 +201,10 @@ const RecordForm = () => {
                             variant="outline"
                             size="icon"
                             className="shrink-0"
-                            onClick={getLatestApplicationNumber}
+                            onClick={setLatestApplicationNumber}
+                            disabled={loading}
                           >
-                            <TextSearch />
+                            {loading ? <Loader /> : <TextSearch />}
                           </Button>
                         </TooltipTrigger>
                         <TooltipContent>
@@ -344,7 +354,11 @@ const RecordForm = () => {
                 </div>
               </div>
             </FormItem>
-            <Button type="submit" className="order-12 mt-8">
+            <Button
+              type="submit"
+              className="order-12 mt-8"
+              disabled={form.formState.isSubmitting}
+            >
               <SendHorizontal className="mr-2 h-4 w-4" />
               Submit
             </Button>
