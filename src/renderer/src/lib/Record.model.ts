@@ -6,6 +6,7 @@ export type RecordUUID = string;
 export type RecordDocType = FormSchemaType & {
   uuid: RecordUUID;
   createdAt: string;
+  updatedAt: string;
 };
 
 export type RecordDocument = RxDocument<RecordDocType>;

@@ -43,7 +43,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <ThemeProvider defaultTheme="dark" enableSystem={false} attribute="class">
       <TooltipProvider>
         <RouterProvider router={router} />
-        <Toaster />
+        <Toaster position="top-right" />
       </TooltipProvider>
     </ThemeProvider>
   </React.StrictMode>,

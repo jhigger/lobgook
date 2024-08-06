@@ -86,6 +86,10 @@ const recordsSchema: RxJsonSchema<RecordDocType> = {
       type: "string",
       format: "date-time",
     },
+    updatedAt: {
+      type: "string",
+      format: "date-time",
+    },
   },
   required: [
     "uuid",
@@ -133,8 +137,10 @@ export const db = (): DBType => {
         .findOne({ selector: { uuid: record.uuid } })
         .exec();
       storedRecord?.modify((recordData: RecordDocType) => {
-        recordData = record;
-        return recordData;
+        return {
+          ...recordData,
+          ...record,
+        };
       });
     },
     deleteRecord: async (uuid: RecordUUID) => {

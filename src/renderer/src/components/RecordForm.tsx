@@ -1,11 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SendHorizontal, TextSearch } from "lucide-react";
+import { CircleX, SendHorizontal, TextSearch } from "lucide-react";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import useDatabase from "../hooks/useDatabase";
-import { capitalize, getLatestApplicationNumber } from "../lib/utils";
+import { RecordDocType } from "../lib/Record.model";
+import { capitalize, cn, getLatestApplicationNumber } from "../lib/utils";
 import Loader from "./Loader";
 import { Button } from "./ui/button";
 import {
@@ -16,6 +17,7 @@ import {
   CardTitle,
 } from "./ui/card";
 import { Checkbox } from "./ui/checkbox";
+import { DrawerClose } from "./ui/drawer";
 import {
   FormControl,
   FormField,
@@ -73,12 +75,17 @@ const defaultValues: FormSchemaType = {
   personWithDisability: false,
 };
 
-const RecordForm = () => {
+type RecordFormProps = {
+  record?: RecordDocType;
+  editMode?: boolean;
+};
+
+const RecordForm = ({ record, editMode = false }: RecordFormProps) => {
   const { loading, records, database } = useDatabase();
 
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
-    defaultValues,
+    defaultValues: editMode ? record : defaultValues,
   });
 
   const onSubmit = async (data: FormSchemaType) => {
@@ -86,15 +93,38 @@ const RecordForm = () => {
       form.getValues("applicationNumber"),
     );
     if (exists) {
+      if (
+        editMode &&
+        record?.applicationNumber === form.getValues("applicationNumber")
+      ) {
+        return await database
+          .updateRecord({
+            ...data,
+            uuid: record.uuid,
+            createdAt: record.createdAt,
+            updatedAt: new Date().toISOString(),
+          })
+          .then(() => {
+            toast.success("Record updated successfully", {
+              richColors: true,
+            });
+          })
+          .catch(() => {
+            toast.error("Failed to update record", {
+              richColors: true,
+            });
+          });
+      }
       return form.setError("applicationNumber", {
         message: "Application number already exists",
       });
     }
 
     await database.addRecord({
+      ...data,
       uuid: crypto.randomUUID(),
       createdAt: new Date().toISOString(),
-      ...data,
+      updatedAt: new Date().toISOString(),
     });
 
     toast("You submitted the following values:", {
@@ -122,11 +152,24 @@ const RecordForm = () => {
   }, [form.watch(["sk", "seniorCitizen"])]);
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Form</CardTitle>
-        <CardDescription>Add a record</CardDescription>
-      </CardHeader>
+    <Card className={cn(editMode && "border-0")}>
+      <div className="flex items-center justify-between">
+        <CardHeader>
+          <CardTitle>Form</CardTitle>
+          <CardDescription>
+            {editMode ? "Edit" : "Add"} a record
+          </CardDescription>
+        </CardHeader>
+        {editMode && (
+          <CardHeader>
+            <DrawerClose asChild>
+              <Button variant="outline" size="icon">
+                <CircleX />
+              </Button>
+            </DrawerClose>
+          </CardHeader>
+        )}
+      </div>
       <CardContent>
         <FormProvider {...form}>
           <form
@@ -359,14 +402,27 @@ const RecordForm = () => {
                 </div>
               </div>
             </FormItem>
-            <Button
-              type="submit"
-              className="order-12 mt-8"
-              disabled={form.formState.isSubmitting}
-            >
-              <SendHorizontal className="mr-2 h-4 w-4" />
-              Submit
-            </Button>
+            {editMode ? (
+              <DrawerClose className="order-12 mt-8" asChild>
+                <Button
+                  type="submit"
+                  className="w-full"
+                  disabled={form.formState.isSubmitting}
+                >
+                  <SendHorizontal className="mr-2 h-4 w-4" />
+                  Update
+                </Button>
+              </DrawerClose>
+            ) : (
+              <Button
+                type="submit"
+                className="order-12 mt-8"
+                disabled={form.formState.isSubmitting}
+              >
+                <SendHorizontal className="mr-2 h-4 w-4" />
+                Submit
+              </Button>
+            )}
           </form>
         </FormProvider>
       </CardContent>

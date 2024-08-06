@@ -1,9 +1,24 @@
 import { CellContext, ColumnDef } from "@tanstack/react-table";
-import { CircleCheck, CircleMinus, CircleX } from "lucide-react";
+import {
+  CircleCheck,
+  CircleMinus,
+  CircleX,
+  MoreHorizontal,
+} from "lucide-react";
 import { RecordDocType } from "~/renderer/lib/Record.model";
 import { cn, formatISODateString } from "~/renderer/lib/utils";
 import { Badge } from "../ui/badge";
+import { Button } from "../ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 import { DataTableColumnHeader } from "./DataTableColumnHeader";
+import DeleteDialog from "./DeleteDialog";
+import EditDrawer from "./EditDrawer";
 
 const BooleanCell = ({ getValue }: CellContext<RecordDocType, unknown>) => {
   const value = getValue() as boolean;
@@ -157,6 +172,33 @@ export const columns: ColumnDef<RecordDocType>[] = [
     cell: BooleanCell,
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id));
+    },
+  },
+  {
+    accessorKey: "actions",
+    header: "Actions",
+    cell: ({ row }) => {
+      const record = row.original;
+
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <span className="sr-only">Open menu</span>
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem asChild>
+              <EditDrawer record={record} />
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem asChild>
+              <DeleteDialog record={record} />
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
     },
   },
 ];

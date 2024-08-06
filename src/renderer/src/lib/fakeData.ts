@@ -6,6 +6,7 @@ export const records: RecordDocType[] = [
   {
     uuid: crypto.randomUUID(),
     createdAt: new Date(date.getTime() - 6 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(date.getTime() - 6 * 24 * 60 * 60 * 1000).toISOString(),
     lastName: "Doe",
     firstName: "John",
     middleName: "Aaa",
@@ -21,6 +22,7 @@ export const records: RecordDocType[] = [
   {
     uuid: crypto.randomUUID(),
     createdAt: new Date(date.getTime() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(date.getTime() - 5 * 24 * 60 * 60 * 1000).toISOString(),
     lastName: "Doe",
     firstName: "Jane",
     middleName: "Bbb",
@@ -36,6 +38,7 @@ export const records: RecordDocType[] = [
   {
     uuid: crypto.randomUUID(),
     createdAt: new Date(date.getTime() - 4 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(date.getTime() - 4 * 24 * 60 * 60 * 1000).toISOString(),
     lastName: "Doe",
     firstName: "Mary",
     middleName: "Ccc",
@@ -51,6 +54,7 @@ export const records: RecordDocType[] = [
   {
     uuid: crypto.randomUUID(),
     createdAt: new Date(date.getTime() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(date.getTime() - 3 * 24 * 60 * 60 * 1000).toISOString(),
     lastName: "Doe",
     firstName: "Mark",
     middleName: "Ddd",
@@ -66,6 +70,7 @@ export const records: RecordDocType[] = [
   {
     uuid: crypto.randomUUID(),
     createdAt: new Date(date.getTime() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(date.getTime() - 2 * 24 * 60 * 60 * 1000).toISOString(),
     lastName: "Doe",
     firstName: "Alice",
     middleName: "Eee",
@@ -81,6 +86,7 @@ export const records: RecordDocType[] = [
   {
     uuid: crypto.randomUUID(),
     createdAt: new Date(date.getTime() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(date.getTime() - 1 * 24 * 60 * 60 * 1000).toISOString(),
     lastName: "Doe",
     firstName: "Bob",
     middleName: "Fff",
@@ -96,6 +102,7 @@ export const records: RecordDocType[] = [
   {
     uuid: crypto.randomUUID(),
     createdAt: new Date(date.getTime() - 0 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(date.getTime() - 0 * 24 * 60 * 60 * 1000).toISOString(),
     lastName: "Doe",
     firstName: "Charlie",
     middleName: "Ggg",
@@ -111,6 +118,7 @@ export const records: RecordDocType[] = [
   {
     uuid: crypto.randomUUID(),
     createdAt: new Date(date.getTime() - 0 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(date.getTime() - 0 * 24 * 60 * 60 * 1000).toISOString(),
     lastName: "Doe",
     firstName: "Dave",
     middleName: "Hhh",
@@ -126,6 +134,7 @@ export const records: RecordDocType[] = [
   {
     uuid: crypto.randomUUID(),
     createdAt: new Date(date.getTime() - 0 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(date.getTime() - 0 * 24 * 60 * 60 * 1000).toISOString(),
     lastName: "Doe",
     firstName: "Eve",
     middleName: "Iii",
@@ -141,6 +150,7 @@ export const records: RecordDocType[] = [
   {
     uuid: crypto.randomUUID(),
     createdAt: new Date(date.getTime() - 0 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(date.getTime() - 0 * 24 * 60 * 60 * 1000).toISOString(),
     lastName: "Smith",
     firstName: "John",
     middleName: "Qqq",
@@ -156,6 +166,7 @@ export const records: RecordDocType[] = [
   {
     uuid: crypto.randomUUID(),
     createdAt: new Date(date.getTime() - 0 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(date.getTime() - 0 * 24 * 60 * 60 * 1000).toISOString(),
     lastName: "Jones",
     firstName: "Alice",
     middleName: "Www",
@@ -171,6 +182,7 @@ export const records: RecordDocType[] = [
   {
     uuid: crypto.randomUUID(),
     createdAt: new Date(date.getTime() - 0 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(date.getTime() - 0 * 24 * 60 * 60 * 1000).toISOString(),
     lastName: "Brown",
     firstName: "Alice",
     middleName: "Exx",
@@ -186,6 +198,7 @@ export const records: RecordDocType[] = [
   {
     uuid: crypto.randomUUID(),
     createdAt: new Date(date.getTime() - 0 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(date.getTime() - 0 * 24 * 60 * 60 * 1000).toISOString(),
     lastName: "Smith",
     firstName: "John",
     middleName: "Zzz",
@@ -201,6 +214,7 @@ export const records: RecordDocType[] = [
   {
     uuid: crypto.randomUUID(),
     createdAt: new Date(date.getTime() - 0 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(date.getTime() - 0 * 24 * 60 * 60 * 1000).toISOString(),
     lastName: "Johnson",
     firstName: "Jane",
     middleName: "Bbb",
@@ -216,6 +230,7 @@ export const records: RecordDocType[] = [
   {
     uuid: crypto.randomUUID(),
     createdAt: new Date(date.getTime() - 0 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(date.getTime() - 0 * 24 * 60 * 60 * 1000).toISOString(),
     lastName: "Williams",
     firstName: "Mary",
     middleName: "Ccc",
@@ -231,6 +246,7 @@ export const records: RecordDocType[] = [
   {
     uuid: crypto.randomUUID(),
     createdAt: new Date(date.getTime() - 0 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(date.getTime() - 0 * 24 * 60 * 60 * 1000).toISOString(),
     lastName: "Davis",
     firstName: "Bob",
     middleName: "Ddd",
@@ -246,6 +262,7 @@ export const records: RecordDocType[] = [
   {
     uuid: crypto.randomUUID(),
     createdAt: new Date(date.getTime() - 0 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(date.getTime() - 0 * 24 * 60 * 60 * 1000).toISOString(),
     lastName: "Garcia",
     firstName: "Juan",
     middleName: "Eee",
@@ -261,6 +278,7 @@ export const records: RecordDocType[] = [
   {
     uuid: crypto.randomUUID(),
     createdAt: new Date(date.getTime() - 0 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(date.getTime() - 0 * 24 * 60 * 60 * 1000).toISOString(),
     lastName: "Martin",
     firstName: "Ana",
     middleName: "Fff",
@@ -276,6 +294,7 @@ export const records: RecordDocType[] = [
   {
     uuid: crypto.randomUUID(),
     createdAt: new Date(date.getTime() - 0 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(date.getTime() - 0 * 24 * 60 * 60 * 1000).toISOString(),
     lastName: "Lopez",
     firstName: "Sofia",
     middleName: "Hhh",
@@ -291,6 +310,7 @@ export const records: RecordDocType[] = [
   {
     uuid: crypto.randomUUID(),
     createdAt: new Date(date.getTime() - 0 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date(date.getTime() - 0 * 24 * 60 * 60 * 1000).toISOString(),
     lastName: "Perez",
     firstName: "Carlos",
     middleName: "Iii",
