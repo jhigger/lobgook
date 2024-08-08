@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Subscription } from "rxjs";
 import { RecordDocType } from "~/lib/Record.model";
 import { db } from "../lib/db";
 
@@ -8,28 +9,46 @@ const useDatabase = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let subscription: Subscription;
+
     const connect = () =>
       database
         .setup()
-        .then(async () => {
-          database.observableRecords().subscribe((allRecords) => {
-            setRecords(allRecords.map((t: any) => ({ ...t._data })));
-            setLoading(false);
-          });
+        .then(() => {
+          subscription = database
+            .observableRecords()
+            .subscribe((allRecords) => {
+              setRecords(
+                allRecords.map((record, i) => {
+                  if (allRecords.length - 1 === i) {
+                    setLoading(false);
+                  }
+                  return record;
+                }),
+              );
+            });
         })
-        .catch(() => console.log("Connecting to database"));
+        .catch(() => console.log("Connecting to database"))
+        .finally(() => setLoading(false));
+
     const scheduleReconnect = () =>
-      setTimeout(() => {
+      setTimeout(async () => {
         if (database.hasSetup()) {
-          connect();
+          await connect();
         } else {
-          database.setup().then(async () => {
-            console.log("Connected");
-          });
+          await database
+            .setup()
+            .then(async () => {
+              console.log("Connected");
+            })
+            .finally(() => setLoading(false));
           scheduleReconnect();
         }
       }, 1000);
+
     scheduleReconnect();
+
+    return () => subscription?.unsubscribe();
   }, []);
 
   return {

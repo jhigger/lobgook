@@ -1,5 +1,5 @@
 import { FileDown, FileUp } from "lucide-react";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 import { RxDumpDatabase } from "rxdb";
 import { toast } from "sonner";
 import { useLocalStorage } from "usehooks-ts";
@@ -22,6 +22,8 @@ import { Separator } from "./ui/separator";
 import { Switch } from "./ui/switch";
 
 const Settings = () => {
+  const [seeding, setSeeding] = useState(false);
+  const [resetting, setResetting] = useState(false);
   const { database, records, loading } = useDatabase();
   const [stripedTable, setStripedTable] = useLocalStorage(
     "striped-table",
@@ -30,13 +32,25 @@ const Settings = () => {
   const [devMode, setDevMode] = useLocalStorage("dev-mode", false);
 
   const handleSeed = async () => {
-    fakeRecords.forEach((record) => database.addRecord(record));
-    toast.success("Seeded database with fake data", { richColors: true });
+    setSeeding(true);
+    await database
+      .addRecords(fakeRecords)
+      .then(() =>
+        toast.success("Seeded database with fake data", { richColors: true }),
+      )
+      .catch(() => toast.error("Failed to seed database", { richColors: true }))
+      .finally(() => setSeeding(false));
   };
 
-  const handleDelete = async () => {
-    records.forEach((record) => database.deleteRecord(record.uuid));
-    toast.success("Deleted all records", { richColors: true });
+  const handleReset = async () => {
+    setResetting(true);
+    await database
+      .resetDatabase()
+      .then(() => toast.success("Deleted all records", { richColors: true }))
+      .catch(() =>
+        toast.error("Failed to delete records", { richColors: true }),
+      )
+      .finally(() => setResetting(false));
   };
 
   const handleStripedTable = () => {
@@ -153,9 +167,9 @@ const Settings = () => {
                     <Label>Seed the database with fake data</Label>
                     <Button
                       onClick={handleSeed}
-                      disabled={loading || records.length > 0}
+                      disabled={loading || records.length > 0 || seeding}
                     >
-                      {loading ? (
+                      {loading || seeding ? (
                         <Loader />
                       ) : records.length > 0 ? (
                         "Already seeded"
@@ -168,10 +182,10 @@ const Settings = () => {
                     <Label>Reset the database</Label>
                     <Button
                       variant="destructive"
-                      onClick={handleDelete}
-                      disabled={loading || records.length <= 0}
+                      onClick={handleReset}
+                      disabled={loading || records.length <= 0 || resetting}
                     >
-                      {loading ? (
+                      {loading || resetting ? (
                         <Loader />
                       ) : records.length <= 0 ? (
                         "Already empty"

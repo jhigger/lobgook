@@ -4,7 +4,9 @@ import {
   RxDumpDatabase,
   RxJsonSchema,
 } from "rxdb";
+import { RxDBCleanupPlugin } from "rxdb/plugins/cleanup";
 import { RxDBJsonDumpPlugin } from "rxdb/plugins/json-dump";
+import { RxDBLeaderElectionPlugin } from "rxdb/plugins/leader-election";
 import { getRxStorageDexie } from "rxdb/plugins/storage-dexie";
 import { BehaviorSubject } from "rxjs";
 import {
@@ -15,6 +17,8 @@ import {
 } from "~/lib/Record.model";
 import { initStoragePersistence, showEstimatedQuota } from "./utils";
 
+addRxPlugin(RxDBLeaderElectionPlugin);
+addRxPlugin(RxDBCleanupPlugin);
 addRxPlugin(RxDBJsonDumpPlugin);
 
 // Good article that talk about ts typing and rxdb: https://rxdb.info/tutorials/typescript.html
@@ -30,6 +34,9 @@ export type DBType = {
   checkApplicationNumberExists: (applicationNumber: string) => Promise<boolean>;
   importJSON: (json: RxDumpDatabase<MyDatabaseCollections>) => Promise<void>;
   exportJSON: () => Promise<RxDumpDatabase<MyDatabaseCollections>>;
+  addRecords: (records: RecordDocType[]) => Promise<void>;
+  deleteRecords: (uuids: RecordUUID[]) => Promise<void>;
+  resetDatabase: () => Promise<void>;
 };
 
 const recordsSchema: RxJsonSchema<RecordDocType> = {
@@ -167,5 +174,27 @@ export const db = (): DBType => {
     importJSON: async (json: RxDumpDatabase<MyDatabaseCollections>) =>
       database.importJSON(json),
     exportJSON: async () => await database.exportJSON(),
+    addRecords: async (records: RecordDocType[]) => {
+      await database.records.bulkInsert(records);
+      await showEstimatedQuota();
+    },
+    deleteRecords: async (uuids: RecordUUID[]) => {
+      await database.records.bulkRemove(uuids);
+    },
+    resetDatabase: async () => {
+      await database.remove();
+      await window.indexedDB.databases().then((databases) => {
+        for (const database of databases) {
+          window.indexedDB.deleteDatabase(String(database.name));
+        }
+      });
+      await window.caches.keys().then(async (keys) => {
+        for (const key of keys) {
+          await window.caches.delete(key);
+        }
+      });
+      await showEstimatedQuota();
+      location.reload();
+    },
   };
 };
